@@ -76,6 +76,9 @@ const ModeToggleButton = styled.button`
   border: 0px;
   border-radius: 4px;
   background-color: ${(props) => props.theme.textColor};
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 function App() {
