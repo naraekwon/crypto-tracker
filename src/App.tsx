@@ -72,6 +72,10 @@ a {
 
 const ModeToggleButton = styled.button`
   padding: 4px 8px;
+  float: right;
+  margin: 8px;
+  border: 1px
+  border-radius: 4px;
 `;
 
 function App() {
@@ -83,7 +87,7 @@ function App() {
     <>
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <ModeToggleButton onClick={handleToggleMode}>
-          toggle mode
+          {isDarkMode ? "☀️" : "🌙"}
         </ModeToggleButton>
         <GlobalStyle />
         <Router />
