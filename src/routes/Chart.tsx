@@ -1,22 +1,10 @@
-import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { fetchCoinPriceHistory } from "../api";
 import ApexChart from "react-apexcharts";
-import ReactApexChart from "react-apexcharts";
+import { IHistorical } from "../types";
 
 interface ChartProps {
   coinId: string;
-}
-
-interface IHistorical {
-  time_open: string;
-  time_close: string;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  volume: number;
-  market_cap: number;
 }
 
 const Chart = ({ coinId }: ChartProps) => {
@@ -29,14 +17,14 @@ const Chart = ({ coinId }: ChartProps) => {
       {isLoading ? (
         "Loading chart..."
       ) : data && data?.length ? (
-        <ReactApexChart
+        <ApexChart
           type="candlestick"
           series={[
             {
               name: "price",
               data:
                 data.map((price) => ({
-                  x: new Date(parseInt(price.time_close) * 1000),
+                  x: new Date(price.time_close * 1000),
                   y: [price.open, price.high, price.low, price.close],
                 })) ?? [],
             },

@@ -104,7 +104,6 @@ const Tabs = styled.div`
   margin: 25px 0px;
   gap: 10px;
 `;
-
 const Tab = styled.span<{ isActive: boolean }>`
   text-align: center;
   text-transform: uppercase;
@@ -199,7 +198,7 @@ const Coin = () => {
 
           <Switch>
             <Route path={`/:coinId/price`}>
-              <Price />
+              <Price coinId={coinId} />
             </Route>
             <Route path={`/:coinId/chart`}>
               <Chart coinId={coinId} />
