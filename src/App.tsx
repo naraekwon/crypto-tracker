@@ -73,8 +73,9 @@ const ModeToggleButton = styled.button`
   padding: 4px 8px;
   float: right;
   margin: 8px;
-  border: 1px
+  border: 0px;
   border-radius: 4px;
+  background-color: ${(props) => props.theme.textColor};
 `;
 
 function App() {
