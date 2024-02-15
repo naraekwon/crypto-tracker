@@ -2,16 +2,23 @@ import { useQuery } from "react-query";
 import { fetchCoinPriceHistory } from "../api";
 import { IHistorical } from "../types";
 import styled from "styled-components";
-import { useState } from "react";
 
 interface PriceProps {
   coinId: string;
 }
 
-const Table = styled.table`
+const TableContainer = styled.div`
+  height: 400px;
   width: 440px;
-  border: none;
-  border-collapse: collapse;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const Table = styled.table`
+  width: 100%;
+  height: 100%;
 
   th,
   td {
@@ -21,13 +28,15 @@ const Table = styled.table`
   }
   th {
     font-weight: 700;
-    color: ${(props) => props.theme.accentColor};
+    color: ${(props) => props.theme.textColor};
   }
   thead > tr {
-    background-color: #636e72;
+    background-color: ${(props) => props.theme.accentColor};
+    position: sticky;
+    top: 0;
   }
   tbody tr:nth-child(even) {
-    background-color: #2d3436;
+    background-color: ${(props) => props.theme.cardBgColor};
   }
   tbody tr:hover {
     background-color: ${(props) => props.theme.accentColor};
@@ -53,31 +62,35 @@ const Price = ({ coinId }: PriceProps) => {
       {isLoading ? (
         "Loading price table..."
       ) : data && data.length ? (
-        <Table>
-          <thead>
-            <tr>
-              {columns.map((title) => (
-                <th key={title}>{title === "time_open" ? "date" : title}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, index) => (
-              <tr key={index}>
-                {columns.map((title, index) => {
-                  if (["time_open", "time_close"].includes(title)) {
-                    const date = new Date(
-                      Number(item[title]) * 1000
-                    ).toLocaleDateString();
-                    return <td key={index}>{date}</td>;
-                  }
-                  return <td key={index}>{item[title]}</td>;
-                })}
+        <TableContainer>
+          <Table>
+            <thead>
+              <tr>
+                {columns.map((title) => (
+                  <th key={title}>{title === "time_open" ? "date" : title}</th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </Table>
-      ) : null}
+            </thead>
+            <tbody>
+              {data.map((item, index) => (
+                <tr key={index}>
+                  {columns.map((title, index) => {
+                    if (["time_open", "time_close"].includes(title)) {
+                      const date = new Date(
+                        Number(item[title]) * 1000
+                      ).toLocaleDateString();
+                      return <td key={index}>{date}</td>;
+                    }
+                    return <td key={index}>{item[title]}</td>;
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </TableContainer>
+      ) : (
+        "Could not fetch price data..."
+      )}
     </div>
   );
 };

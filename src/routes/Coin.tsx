@@ -80,7 +80,7 @@ interface PriceData {
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.bgColor};
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -104,16 +104,16 @@ const Tabs = styled.div`
   margin: 25px 0px;
   gap: 10px;
 `;
-const Tab = styled.span<{ isActive: boolean }>`
+const Tab = styled.span<{ open: boolean }>`
   text-align: center;
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.bgColor};
   padding: 7px 0px;
   border-radius: 10px;
   color: ${(props) =>
-    props.isActive ? props.theme.accentColor : props.theme.textColor};
+    props.open ? props.theme.accentColor : props.theme.textColor};
   a {
     display: block;
   }
@@ -188,10 +188,10 @@ const Coin = () => {
           </Overview>
 
           <Tabs>
-            <Tab isActive={chartMatch !== null}>
+            <Tab open={chartMatch !== null}>
               <Link to={`/${coinId}/chart`}>Chart</Link>
             </Tab>
-            <Tab isActive={priceMatch !== null}>
+            <Tab open={priceMatch !== null}>
               <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>

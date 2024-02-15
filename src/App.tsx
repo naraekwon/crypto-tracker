@@ -1,6 +1,9 @@
-import { createGlobalStyle } from "styled-components";
+import { useState } from "react";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import "./App.css";
 import Router from "./Router";
+import { darkTheme, lightTheme } from "./theme";
+import styled from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -67,11 +70,24 @@ a {
 }
 `;
 
+const ModeToggleButton = styled.button`
+  padding: 4px 8px;
+`;
+
 function App() {
+  const [isDarkMode, setIsDarMode] = useState<boolean>(true);
+
+  const handleToggleMode = () => setIsDarMode((prev) => !prev);
+
   return (
     <>
-      <GlobalStyle />
-      <Router />
+      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <ModeToggleButton onClick={handleToggleMode}>
+          toggle mode
+        </ModeToggleButton>
+        <GlobalStyle />
+        <Router />
+      </ThemeProvider>
     </>
   );
 }
