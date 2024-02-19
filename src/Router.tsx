@@ -6,7 +6,7 @@ import Coins from "./routes/Coins";
 const Router = () => {
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route path="/:coinId">
             <Coin />
